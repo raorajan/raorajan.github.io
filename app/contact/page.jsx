@@ -13,7 +13,6 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { FaPhoneAlt, FaEnvelope, FaMapMarkerAlt } from "react-icons/fa";
-import emailjs from "emailjs-com";
 import { motion } from "framer-motion";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -55,11 +54,11 @@ function Contact() {
     setFormData({ ...formData, service: value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
 
-    const templateParams = {
+    const requestBody = {
       firstname: formData.firstname,
       lastname: formData.lastname,
       email: formData.email,
@@ -68,14 +67,20 @@ function Contact() {
       message: formData.message,
     };
 
-    emailjs
-      .send(
-        "service_0e22thm",
-        "template_vpag8hx",
-        templateParams,
-        "54l8ay4xJAHbFZmS3"
-      )
-      .then((response) => {
+    try {
+      // Use environment variable or fallback to direct URL
+      const apiEndpoint = `${process.env.NEXT_PUBLIC_EMAIL_API_URL}/api/v1/send-email`;
+      const response = await fetch(apiEndpoint, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(requestBody),
+      });
+
+      const data = await response.json();
+
+      if (response.ok && data.success) {
         toast.success("Message sent successfully!");
         setFormData({
           firstname: "",
@@ -85,13 +90,15 @@ function Contact() {
           service: "",
           message: "",
         });
-      })
-      .catch((error) => {
-        toast.error("Failed to send message.");
-      })
-      .finally(() => {
-        setLoading(false);
-      });
+      } else {
+        toast.error(data.message || "Failed to send message.");
+      }
+    } catch (error) {
+      toast.error("Failed to send message. Please try again.");
+      console.error("Error sending email:", error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
