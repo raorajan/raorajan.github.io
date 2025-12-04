@@ -5,7 +5,7 @@ import Nav from "./Nav";
 import MobileNav from "./MobileNav";
 function Header() {
   return (
-    <header className="py-8 xl:py-10 text-white relative z-20">
+    <header className="sticky top-0 py-6 md:py-8 xl:py-10 text-white z-50 backdrop-blur-md ">
       <div className="container mx-auto flex justify-between items-center">
         {}
         <Link href={"/"}>

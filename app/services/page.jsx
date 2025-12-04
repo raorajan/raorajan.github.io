@@ -6,19 +6,19 @@ const services = [
     num: "01",
     title: "Full Stack Web Development",
     description: "Developing robust web applications using HTML5, CSS3, JavaScript, ReactJS, Node.js, ExpressJS, and MongoDB. Ensuring responsive design and seamless user experiences.",
-    href: "https://github.com/raobaba/Flipkart_Clone",
+    href: process.env.NEXT_PUBLIC_SERVICE_FULLSTACK_GITHUB || "https://github.com/raobaba/Flipkart_Clone",
   },
   {
     num: "02",
     title: "Backend Development",
     description: "Building scalable backend systems with Node.js, ExpressJS, and MySQL. Implementing efficient RESTful APIs, database management, and data encryption for secure and high-performance applications.",
-    href: "https://github.com/raobaba/EcommercePlus-Server",
+    href: process.env.NEXT_PUBLIC_SERVICE_BACKEND_GITHUB || "https://github.com/raobaba/EcommercePlus-Server",
   },
   {
     num: "03",
     title: "Frontend Development",
     description: "Creating intuitive and dynamic user interfaces using ReactJS, NextJS, Redux, and styled-components. Enhancing user interactions and frontend performance.",
-    href: "https://github.com/raobaba/BiteSpeed-FrontEnd-Task",
+    href: process.env.NEXT_PUBLIC_SERVICE_FRONTEND_GITHUB || "https://github.com/raobaba/BiteSpeed-FrontEnd-Task",
   },
   {
     num: "04",
